@@ -6,7 +6,7 @@ from app.schemas.chat_schemas import IntentResponse
 load_dotenv()
 
 llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash-lite",
+    model="gemini-2.5-pro",
     temperature=0,
     api_key= os.getenv("GEMINI_API_KEY"),
     max_output_tokens=2000
@@ -19,14 +19,14 @@ llm_agent = ChatGoogleGenerativeAI(
 
 )
 rewiter_llm = ChatGoogleGenerativeAI(
-    model="gemini-3.1-flash-lite-preview",
+    model="gemini-3-flash-preview",
     temperature=0,
     api_key= os.getenv("GEMINI_API_KEY"),
-    max_output_tokens=100
+    
 )
 
 intent_llm = ChatGoogleGenerativeAI(
-    model="gemini-3.1-flash-lite-preview",
+    model="gemini-2.5-flash",
     temperature=0,
     api_key= os.getenv("GEMINI_API_KEY"),
     

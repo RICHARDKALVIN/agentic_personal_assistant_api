@@ -2,6 +2,8 @@ def get_restaurants(city=None, locality=None, hotel_name=None):
     
     restaurants = [
         {"city": "Mumbai", "locality": "West Mumbai", "hotel_name": "Taj Hotel", "cuisine": "Indian", "rating": 4.5},
+        {"city": "Mumbai", "locality": "West Mumbai", "hotel_name": "Rivin Mahal", "cuisine": "Indian", "rating": 4.5},
+        {"city": "Mumbai", "locality": "West Mumbai", "hotel_name": "Hotel by Marriott", "cuisine": "Indian", "rating": 4.5},
         {"city": "Mumbai", "locality": "West Mumbai", "hotel_name": "Sea View Resort", "cuisine": "Seafood", "rating": 4.2},
         {"city": "Mumbai", "locality": "East Mumbai", "hotel_name": "City Palace", "cuisine": "Chinese", "rating": 4.1},
         {"city": "Delhi", "locality": "South Delhi", "hotel_name": "Royal Palace", "cuisine": "Mughlai", "rating": 4.6},

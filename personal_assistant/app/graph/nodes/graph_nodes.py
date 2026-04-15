@@ -119,5 +119,21 @@ async def book_hotel_node(state: AgentState):
     hotel_name = intent["hotel_name"]
     date_and_time = intent["date_and_time"]
 
-    return {"final_reply" : f"you have booked {hotel_name} for {date_and_time} in {city}"}
+    prompt= f"""
+    You are an part of expert hotel booking assistant. Your task is to sent final reply that the user has booked the hotel.
+    hotel : {hotel_name} date and time : {date_and_time} city :{city}  
+    -> be natural and be welcoming
+    -> ask do you want any other help ?
+
+    """
+
+    response = await rest_llm.chat.completions.create(
+        model="grok-2-latest",
+        messages=[
+            {"role": "user", "content": prompt}
+        ]
+    )
+
+
+    return {"final_reply" :  response.choices[0].message.content }
 

@@ -9,14 +9,14 @@ def intent_checker(state : AgentState):
     if intent["is_general"]:
         return "general_conv"
     elif intent["is_reservation"]:
-        return "hotel_check"
+        return "field_check"
     else:
         return END
 
 def feild_checker(state : AgentState):
     
     if state["message_to_next"] == "continue":
-        return "next"
+        return "list_hotel"
     else:
         return END
 

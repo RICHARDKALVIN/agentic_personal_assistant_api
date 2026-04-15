@@ -7,11 +7,20 @@ from app.utils.query_util import get_re_written_query
 from loguru import logger
 from app.graph.graph import app
 from app.schemas.graph_state import AgentState
+from langfuse.langchain import CallbackHandler
 
 
    
 
-async def chat(chat_request : ChatRequest):
+async def chat(chat_request : ChatRequest,handler : CallbackHandler):
+
+    config = {
+        "callbacks": [handler],
+        "metadata": {
+            "langfuse_user_id": chat_request.user_id,
+            "langfuse_session_id": chat_request.session_id       
+        }
+    }
 
     redisSTM = RedisSTM(user_id=chat_request.user_id)
 
@@ -29,7 +38,7 @@ async def chat(chat_request : ChatRequest):
     logger.info(f"agent memeory: {prompt}")
 
 
-    ans = await app.ainvoke(AgentState(query=re_written_query,final_reply="",intent={},message_to_next="",conv_history=prompt))
+    ans = await app.ainvoke(AgentState(query=re_written_query,final_reply="",intent={},message_to_next="",conv_history=prompt),config=config)
   
 
     logger.info(f"agent response: { ans["final_reply"]}")
