@@ -9,16 +9,16 @@ builder.add_node("intent_router",intent_router_node)
 builder.add_node("general_conv",general_conv_node)
 builder.add_node("field_check",field_check_node)
 builder.add_node("list_hotel",list_hotel_node)
-builder.follow_up("follow_up",book_hotel_node)
+builder.add_node("follow_up",book_hotel_node)
 
 
-builder.add_conditional_edges("intent_router",intent_checker,["general_conv_node", "field_check","follow_up",END])
+builder.add_conditional_edges("intent_router",intent_checker,["general_conv", "field_check","follow_up",END])
 builder.add_conditional_edges("field_check",feild_checker,["list_hotel",END])
 builder.add_edge("list_hotel",END)
 builder.add_edge("general_conv",END)
 builder.add_edge("follow_up",END)
 
 
-builder.set_entry_point("router")
+builder.set_entry_point("intent_router")
 
 app = builder.compile()
