@@ -6,6 +6,8 @@ from datetime import datetime, timezone
 from app.utils.tools import get_restaurants
 import json
 from app.llm.provider import rest_llm
+from app.web_search.search import web_search
+
 
 
 now_utc = datetime.now(timezone.utc)
@@ -49,7 +51,8 @@ agent memory:
 1. **General Queries**: If the user is asking a general question (e.g., "How are you?", "Tell me a joke"), set `is_general` to true  and `general_reply` to give appropriate response.. All other fields should remain at their default values (null or empty).
 3. **Follow Up Queries**:  set `is_follow_up` to true when user asked to book a particular restaurants or hotel and `is_general` to false.
 4. **Reservation Queries**: If the user expresses intent to book or inquire about a specific hotel stay, set `is_reservation` to true and `is_general` to false.
-5. **Data Extraction**:
+5. **Web Search Queries**: If the user asks for information about a specific topic, set `need_web_search` to true and `is_general` to false.
+6. **Data Extraction**:
    - **city**: Extract the city name (e.g., "Mumbai"). 
    - **locality**: Extract specific areas if mentioned (e.g., "Andheri West").
    - **hotel_name**: Extract the specific hotel name if provided.
@@ -136,4 +139,11 @@ async def book_hotel_node(state: AgentState):
 
 
     return {"final_reply" :  response.choices[0].message.content }
+
+
+async def web_search_node(state: AgentState):
+
+    response = await web_search(state["query"])
+
+    return {"final_reply" : response}
 

@@ -15,6 +15,9 @@ class IntentResponse(BaseModel):
     is_general: bool = Field(
         ..., description="True if the user query is a general greeting, joke, or off-topic."
     )
+    need_web_search: bool = Field(
+        ..., description="True if the user query requires web search."
+    )
     is_follow_up: bool = Field(
         ..., description="if query based on follow up "
     )

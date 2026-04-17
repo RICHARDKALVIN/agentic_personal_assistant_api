@@ -10,6 +10,8 @@ def intent_checker(state : AgentState):
         return "general_conv"
     elif intent["is_reservation"]:
         return "field_check"
+    elif intent["need_web_search"]:
+        return "web_search"
     else:
         return END
 
