@@ -1,5 +1,4 @@
 from pydantic import BaseModel,Field
-from datetime import datetime
 from typing import Optional
 
 class ChatRequest(BaseModel):
@@ -8,8 +7,14 @@ class ChatRequest(BaseModel):
     message: str
 
 class ChatResponse(BaseModel):
+    user_id: str
+    session_id: str
     response: str
 
+
+class Hotel_details(BaseModel):
+    id: str = Field(...,description="hotel id for booking")
+    name: str = Field(...,description="hotel name for booking")
 
 class IntentResponse(BaseModel):
     is_general: bool = Field(
@@ -30,13 +35,24 @@ class IntentResponse(BaseModel):
     city: Optional[str] = Field(
         default=None, description="City name, e.g., 'mumbai'."
     )
-    hotel_name: Optional[str] = Field(
-        default=None, description="Specific hotel name."
+    preferences: Optional[str] = Field(
+        default=None, description="User preferences about the hotel, e.g., 'romantic', 'budget-friendly'."
     )
-    locality: Optional[str] = Field(
-        default=None, description="Specific area within a city, e.g., 'bandra'."
+    budget: Optional[int] = Field(
+        default=None, description="Budget for the stay, e.g., 500."
     )
     
-    date_and_time: Optional[datetime] = Field(
+    check_in: Optional[str] = Field(
         default=None, description="ISO 8601 formatted date and time for the stay."
     )
+    check_out: Optional[str] = Field(
+        default=None, description="ISO 8601 formatted date and time for the stay."
+    )
+    guests: Optional[int] = Field(
+        default=None, description="Number of guests."
+    )
+    selected_hotel: Optional[Hotel_details] = Field(
+        default=None, description="Hotel details for booking"
+    )
+
+

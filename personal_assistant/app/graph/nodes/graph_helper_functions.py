@@ -15,10 +15,17 @@ def intent_checker(state : AgentState):
     else:
         return END
 
-def feild_checker(state : AgentState):
+def retry_router(state : AgentState):
     
-    if state["message_to_next"] == "continue":
-        return "list_hotel"
+    if state["action"] == "book_hotel":
+        return "hotel_search"
+    else:
+        return END
+    
+def task_router(state : AgentState):
+    
+    if state["action"] == "book_hotel":
+        return "book_hotel"
     else:
         return END
 

@@ -2,7 +2,6 @@ from app.schemas.chat_schemas import  ChatRequest, ChatResponse
 from app.memory.RedisSTM import RedisSTM
 from app.utils.prompts import build_prompt
 from app.core.redis import redis_client
-from langchain_core.output_parsers import StrOutputParser
 from app.utils.query_util import get_re_written_query
 from loguru import logger
 from app.graph.graph import app
@@ -36,9 +35,9 @@ async def chat(chat_request : ChatRequest,handler : CallbackHandler):
     prompt = build_prompt(summary, stm, "none", re_written_query)
 
     logger.info(f"agent memeory: {prompt}")
+     
 
-
-    ans = await app.ainvoke(AgentState(query=re_written_query,final_reply="",intent={},message_to_next="",conv_history=prompt),config=config)
+    ans = await app.ainvoke(AgentState(query=re_written_query,session_id=chat_request.session_id,final_reply="",intent={},message_to_next="",conv_history=prompt,search_results=[],selected_hotel={},action=""),config=config)
   
 
     logger.info(f"agent response: { ans["final_reply"]}")
@@ -50,7 +49,7 @@ async def chat(chat_request : ChatRequest,handler : CallbackHandler):
     if new_count % 3 == 0:
         await redisSTM.summarize_conversation()
 
-    return ChatResponse(response=ans["final_reply"])
+    return ChatResponse(user_id=chat_request.user_id,session_id=chat_request.session_id,response=ans["final_reply"])
 
 
 
